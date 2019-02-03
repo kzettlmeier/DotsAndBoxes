@@ -1,7 +1,7 @@
 package main;
 
 import models.Board;
-import models.Box;
+import models.BoxOwner;
 
 import java.util.Scanner;
 
@@ -20,5 +20,21 @@ public class Main {
         // Generate a board
         Board board = new Board(boardSize);
         board.printBoard();
+
+        // Start Game (Human Goes first then switches back and forth)
+        boolean humanTurn = true;
+        // Keep playing while there is a box that doesn't have an owner
+        while (!board.gameComplete()) {
+            // If Human ask for input
+
+            // If AI figure out best move
+
+            // Swap players
+            humanTurn = !humanTurn;
+        }
+
+        // Game complete calculate score
+        BoxOwner winner = board.calculateWinner();
+        System.out.println("The Winner is " + winner.toString());
     }
 }
