@@ -13,8 +13,14 @@ public class Board {
 
     public void printBoard() {
         int size = this.board.length;
+        // Print top coordinates
+        String topLine = "  ";
+        for (int i = 0; i < size - 1; i++) {
+            topLine += " " + i + " ";
+        }
+        System.out.println(topLine);
         for (int i = 0; i < size; i++) {
-            String boardLine = "";
+            String boardLine = "  ";
             // Print Top
             for (int j = 0; j < size - 1; j++) {
                 boardLine += ".";
@@ -28,7 +34,7 @@ public class Board {
             System.out.println(boardLine);
             // Print Sides
             if (i != size - 1) {
-                boardLine = "";
+                boardLine = "" + i + " ";
                 for (int j = 0; j < size - 1; j++) {
                     if (j == 0) {
                         if (this.board[i][j].getLeft()) {
@@ -38,9 +44,9 @@ public class Board {
                         }
                     }
                     if (this.board[i][j].getOwner().equals(BoxOwner.NONE)) {
-                        boardLine += "  ";
+                        boardLine += this.board[i][j].getScore() + " ";
                     } else {
-                        boardLine += this.board[i][j].getOwner().toString().substring(0, 2);
+                        boardLine += this.board[i][j].getScore() + this.board[i][j].getOwner().toString().substring(0, 1);
                     }
                     if (this.board[i][j].getRight()) {
                         boardLine += "|";
