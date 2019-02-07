@@ -11,6 +11,48 @@ public class Board {
         return this.board;
     }
 
+    public Box getBoxAtCoordinate(int x, int y) {
+        int size = this.board.length;
+        if (x < 0 || x > size - 1 || y < 0 || y > size - 1) {
+            return null;
+        }
+        return this.board[x][y];
+    }
+
+    public Box getSiblingBoxBasedOnCoordinateAndMove(int x, int y, String side) {
+        int size = this.board.length;
+        if (x < 0 || x > size - 1 || y < 0 || y > size - 1) {
+            return null;
+        }
+        if (side.equals("left")) {
+            // Check if left most box
+            if (x == 0) {
+                return null;
+            }
+            return this.board[x][y - 1];
+        } else if (side.equals("top")) {
+            // Check if top most box
+            if (y == 0) {
+                return null;
+            }
+            return this.board[x - 1][y];
+        } else if (side.equals("right")) {
+            // Check if right most box
+            if (x == size - 1) {
+                return null;
+            }
+            return this.board[x][y + 1];
+        } else if (side.equals("bottom")) {
+            // Check if bottom most box
+            if (y == size - 1) {
+                return null;
+            }
+            return this.board[x + 1][y];
+        }
+
+        return null;
+    }
+
     public void printBoard() {
         int size = this.board.length;
         // Print top coordinates
