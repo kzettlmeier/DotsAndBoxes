@@ -17,6 +17,19 @@ public class Box {
         this.owner = BoxOwner.NONE;
     }
 
+    public Box(boolean left, boolean top, boolean right, boolean bottom, int score, BoxOwner owner) {
+        this.left = left;
+        this.top = top;
+        this.right = right;
+        this.bottom = bottom;
+        this.score = score;
+        this.owner = owner;
+    }
+
+    public Box clone() {
+        return new Box(this.left, this.top, this.right, this.bottom, this.score, this.owner);
+    }
+
     public boolean getLeft() {
         return this.left;
     }

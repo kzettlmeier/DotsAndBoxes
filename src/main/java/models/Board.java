@@ -3,12 +3,28 @@ package models;
 public class Board {
     private Box[][] board;
 
+    public Board(int size, boolean forClone) {
+        this.board = new Box[size][size];
+    }
+
     public Board(int size) {
         this.board = generateBoard(size);
     }
 
     public Box[][] getBoard() {
         return this.board;
+    }
+
+    public Board clone() {
+        int size = this.board.length;
+        Board newBoard = new Board(size, true);
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                newBoard.board[i][j] = board[i][j].clone();
+            }
+        }
+
+        return newBoard;
     }
 
     public Box getBoxAtCoordinate(int x, int y) {
