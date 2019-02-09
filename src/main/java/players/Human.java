@@ -7,6 +7,7 @@ import models.BoxOwner;
 import java.util.Scanner;
 
 public class Human {
+    // When leaving this function the human will have made a move
     public void makeMove(Board board, Scanner input) {
         boolean stillNeedsToMove = true;
         while (stillNeedsToMove) {

@@ -5,6 +5,7 @@ import algorithms.IterativeDeepeningSearch;
 import models.*;
 
 public class AI {
+    // This will have the AI make a move on the board
     public void makeMove(Board board, int numOfPlys) {
         Node root = this.buildGameTree(board, numOfPlys);
 
@@ -12,9 +13,9 @@ public class AI {
         MinMaxSearch.searchGameTreeForMove(root);
 
         // Get score of root and find child that has that score, that is the move to take
-        int score = root.getScore();
+        int score = root.getScore().getScore();
         for (Node child : root.getChildren()) {
-            if (child.getScore() == score) {
+            if (child.getScore().getScore() == score) {
                 // This is the move to make
                 // Take the move and check if now owner
                 Move move = child.getMove();
@@ -53,6 +54,7 @@ public class AI {
         board.printBoard();
     }
 
+    // This initiates the building of the game tree for the AI
     private Node buildGameTree(Board board, int numOfPlys) {
         // Create root node
         Node root = new Node(board, MinMaxEnum.MAX, null, null);

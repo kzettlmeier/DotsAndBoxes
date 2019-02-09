@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class IterativeDeepeningSearch {
+    // This will build the game tree using iterative deepening search
     public static void runDepthFirstSearchWithDepth(Node startingNode, int maxDepth) {
         LinkedList<Node> queue = new LinkedList<>();
         List<Node> visitedNodes = new ArrayList<>();

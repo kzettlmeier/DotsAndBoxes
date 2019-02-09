@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Node {
     private Board board;
-    private int score;
+    private Score score;
     private MinMaxEnum minOrMax;
     private List<Node> children;
     private Node parent;
@@ -13,11 +13,16 @@ public class Node {
 
     public Node(Board board, MinMaxEnum minOrMax, Node parent, Move move) {
         this.board = board;
-        this.score = 0;
+        this.score = null;
         this.minOrMax = minOrMax;
         this.children = new ArrayList<>();
         this.parent = parent;
         this.move = move;
+    }
+
+
+    public Node getParent() {
+        return this.parent;
     }
 
     public Move getMove() {
@@ -44,10 +49,10 @@ public class Node {
     }
 
     public void setScore(int score) {
-        this.score = score;
+        this.score = new Score(score);
     }
 
-    public int getScore() {
+    public Score getScore() {
         return this.score;
     }
 
