@@ -1,24 +1,63 @@
 package players;
 
+import algorithms.MinMaxSearch;
 import algorithms.IterativeDeepeningSearch;
-import models.Board;
-import models.MinMaxEnum;
-import models.Node;
+import models.*;
 
 public class AI {
     public void makeMove(Board board, int numOfPlys) {
-        this.buildGameTree(board, numOfPlys);
-    }
+        Node root = this.buildGameTree(board, numOfPlys);
 
-    private int score(int blackScore, int whiteScore) {
-        return blackScore - whiteScore;
+        //Run Depth first search to see which move to make
+        MinMaxSearch.searchGameTreeForMove(root);
+
+        // Get score of root and find child that has that score, that is the move to take
+        int score = root.getScore();
+        for (Node child : root.getChildren()) {
+            if (child.getScore() == score) {
+                // This is the move to make
+                // Take the move and check if now owner
+                Move move = child.getMove();
+                int xCoordinateOfBox = move.getX();
+                int yCoordinateOfBox = move.getY();
+                String side = move.getSide();
+                boolean nowOwner = board.getBoard()[xCoordinateOfBox][yCoordinateOfBox].setSide(side, BoxOwner.AI);
+                if (nowOwner) {
+                    System.out.println("AI now owns this box!");
+                }
+                // Check and see if you need to update the siblings side
+                Box siblingToUpdate = board.getSiblingBoxBasedOnCoordinateAndMove(xCoordinateOfBox, yCoordinateOfBox, side);
+                if (siblingToUpdate != null) {
+                    boolean owner;
+                    // Set opposite side in sibling
+                    if (side.equals("left")) {
+                        owner = siblingToUpdate.setSide("right", BoxOwner.AI);
+                    } else if (side.equals("top")) {
+                        owner = siblingToUpdate.setSide("bottom", BoxOwner.AI);
+                    } else if (side.equals("right")) {
+                        owner = siblingToUpdate.setSide("left", BoxOwner.AI);
+                    } else {
+                        owner = siblingToUpdate.setSide("top", BoxOwner.AI);
+                    }
+
+                    if (owner) {
+                        System.out.println("AI now owns the sibling box as well");
+                    }
+                }
+
+                break;
+            }
+        }
+
+        // Print Board
+        board.printBoard();
     }
 
     private Node buildGameTree(Board board, int numOfPlys) {
         // Create root node
-        Node root = new Node(board, MinMaxEnum.MAX, null);
+        Node root = new Node(board, MinMaxEnum.MAX, null, null);
 
-        IterativeDeepeningSearch.runDepthFirstSearchWithDepth(root, numOfPlys);
+        IterativeDeepeningSearch.runDepthFirstSearchWithDepth(root, numOfPlys + 1);
 
         return root;
     }

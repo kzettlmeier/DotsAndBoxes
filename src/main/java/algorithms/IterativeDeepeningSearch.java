@@ -21,7 +21,7 @@ public class IterativeDeepeningSearch {
             visitedNodes.add(node);
 
             if (node.getCurrentDepth() < maxDepth) {
-                List<Node> children = node.getSuccessors();
+                List<Node> children = node.generateSuccessors();
                 for (Node child : children) {
                     if (!queue.contains(child) && !visitedNodes.contains(child)) {
                         queue.add(child);

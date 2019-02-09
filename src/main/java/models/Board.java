@@ -27,6 +27,20 @@ public class Board {
         return newBoard;
     }
 
+    public int calculateScoreForPlayer(BoxOwner player) {
+        int size = this.board.length;
+        int score = 0;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (this.board[i][j].getOwner().equals(player)) {
+                    score += this.board[i][j].getScore();
+                }
+            }
+        }
+
+        return score;
+    }
+
     public Box getBoxAtCoordinate(int x, int y) {
         int size = this.board.length;
         if (x < 0 || x > size - 1 || y < 0 || y > size - 1) {
@@ -42,25 +56,25 @@ public class Board {
         }
         if (side.equals("left")) {
             // Check if left most box
-            if (x == 0) {
+            if (y == 0) {
                 return null;
             }
             return this.board[x][y - 1];
         } else if (side.equals("top")) {
             // Check if top most box
-            if (y == 0) {
+            if (x == 0) {
                 return null;
             }
             return this.board[x - 1][y];
         } else if (side.equals("right")) {
             // Check if right most box
-            if (x == size - 1) {
+            if (y == size - 1) {
                 return null;
             }
             return this.board[x][y + 1];
         } else if (side.equals("bottom")) {
             // Check if bottom most box
-            if (y == size - 1) {
+            if (x == size - 1) {
                 return null;
             }
             return this.board[x + 1][y];
@@ -73,14 +87,14 @@ public class Board {
         int size = this.board.length;
         // Print top coordinates
         String topLine = "  ";
-        for (int i = 0; i < size - 1; i++) {
+        for (int i = 0; i < size; i++) {
             topLine += " " + i + " ";
         }
         System.out.println(topLine);
         for (int i = 0; i < size; i++) {
             String boardLine = "  ";
             // Print Top
-            for (int j = 0; j < size - 1; j++) {
+            for (int j = 0; j < size; j++) {
                 boardLine += ".";
                 if (this.board[i][j].getTop()) {
                     boardLine += "__";
@@ -91,9 +105,9 @@ public class Board {
             boardLine += ".";
             System.out.println(boardLine);
             // Print Sides
-            if (i != size - 1) {
+            if (i != size) {
                 boardLine = "" + i + " ";
-                for (int j = 0; j < size - 1; j++) {
+                for (int j = 0; j < size; j++) {
                     if (j == 0) {
                         if (this.board[i][j].getLeft()) {
                             boardLine += "|";
@@ -115,14 +129,18 @@ public class Board {
                 System.out.println(boardLine);
             }
             // Print Bottom
-            boardLine = "";
-            for (int j = 0; j < size; j++) {
-                boardLine += ".";
-                if (this.board[i][j].getBottom()) {
-                    boardLine += "__";
-                } else {
-                    boardLine += "  ";
+            if (i == size - 1) {
+                boardLine = "  ";
+                for (int j = 0; j < size; j++) {
+                    boardLine += ".";
+                    if (this.board[i][j].getBottom()) {
+                        boardLine += "__";
+                    } else {
+                        boardLine += "  ";
+                    }
                 }
+                boardLine += ".";
+                System.out.println(boardLine);
             }
         }
     }

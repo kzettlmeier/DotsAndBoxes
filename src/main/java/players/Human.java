@@ -42,15 +42,20 @@ public class Human {
             // Check and see if you need to update the siblings side
             Box siblingToUpdate = board.getSiblingBoxBasedOnCoordinateAndMove(x, y, side);
             if (siblingToUpdate != null) {
+                boolean owner;
                 // Set opposite side in sibling
                 if (side.equals("left")) {
-                    siblingToUpdate.setSide("right", BoxOwner.HUMAN);
+                    owner = siblingToUpdate.setSide("right", BoxOwner.HUMAN);
                 } else if (side.equals("top")) {
-                    siblingToUpdate.setSide("bottom", BoxOwner.HUMAN);
+                    owner = siblingToUpdate.setSide("bottom", BoxOwner.HUMAN);
                 } else if (side.equals("right")) {
-                    siblingToUpdate.setSide("left", BoxOwner.HUMAN);
+                    owner = siblingToUpdate.setSide("left", BoxOwner.HUMAN);
                 } else {
-                    siblingToUpdate.setSide("top", BoxOwner.HUMAN);
+                    owner = siblingToUpdate.setSide("top", BoxOwner.HUMAN);
+                }
+
+                if (owner) {
+                    System.out.println("You now own the sibling box as well");
                 }
             }
             // End the turn for the user

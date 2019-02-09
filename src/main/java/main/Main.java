@@ -19,7 +19,7 @@ public class Main {
         int boardSize = input.nextInt();
 
         // Generate a board
-        Board board = new Board(boardSize);
+        Board board = new Board(boardSize - 1);
         board.printBoard();
 
         // Start Game (Human Goes first then switches back and forth)
